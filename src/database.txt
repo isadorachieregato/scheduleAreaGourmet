@@ -1,0 +1,47 @@
+create database viver_bem;
+use viver_bem;
+
+CREATE TABLE User (
+  Email VARCHAR(255) PRIMARY KEY,
+  Name VARCHAR(255),
+  Password VARCHAR(255),
+  Apartment INT NOT NULL,
+  Block INT NOT NULL,
+  Telephone VARCHAR(13) UNIQUE NOT NULL
+);
+
+CREATE TABLE Area (
+  ID_area INT AUTO_INCREMENT PRIMARY KEY,
+  Capacity INT,
+  Norms TEXT,
+  Appliances TEXT,
+  Name VARCHAR(50) DEFAULT 'CHURRASCO'
+);
+
+CREATE TABLE Booking (
+  ID_Booking INT PRIMARY KEY AUTO_INCREMENT,
+  Date_init DATE NOT NULL,
+  Date_end DATE NOT NULL,
+  FK_email VARCHAR(255) NOT NULL,
+  FK_ID_Area INT NOT NULL,
+  FOREIGN KEY (FK_email) REFERENCES User(Email),
+  FOREIGN KEY (FK_ID_Area) REFERENCES Area(ID_area)
+);
+
+INSERT INTO User (Email, Name, Password, Apartment, Block, Telephone) VALUES
+('maria.silva@example.com', 'Maria Silva', 'senha123', 101, 1, '11987654321'),
+('joao.pereira@example.com', 'João Pereira', 'senha456', 202, 2, '11991234567'),
+('luisa.goncalves@example.com', 'Luisa Gonçalves', 'senha789', 303, 3, '11998765432'),
+('pedro.oliveira@example.com', 'Pedro Oliveira', 'senha012', 404, 4, '11987654310');
+
+INSERT INTO Area ( Capacity, Norms, Appliances, Name) VALUES
+(50, 'Não deixar lixo no local. Não realizar barulho excessivo.', 'Churrasqueira, Mesa, Cadeiras.', 'Área de Churrasco'),
+(100, 'Não utilizar a área durante a manutenção.', 'Nenhum.', 'Salão de Festas'),
+(20,  'Apenas usuários autorizados podem utilizar a área.', 'Piscina, Espreguiçadeiras.', 'Piscina'),
+(10, 'Apenas usuários autorizados podem utilizar a área.', 'Toalhas,Chinelos e armários', 'Saúna');
+
+INSERT INTO Booking (Date_init, Date_end, FK_email, FK_ID_Area) VALUES
+('2023-04-01', '2023-04-03', 'maria.silva@example.com', 1),
+('2023-04-05', '2023-04-07', 'joao.pereira@example.com', 2),
+('2023-04-10', '2023-04-12', 'luisa.goncalves@example.com', 3),
+	('2023-04-15', '2023-04-17', 'pedro.oliveira@example.com', 4);
